@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+      <s:element name="KeyGen">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="UserID" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="Qty" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="KeyGenResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="KeyGenResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="NewGUID">
+        <s:complexType />
+      </s:element>
+      <s:element name="NewGUIDResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="NewGUIDResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="RecordUsage">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="sIP" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="sComputerName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="sUserID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="sRegKey" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="iQty" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="RecordUsageResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="RecordUsageA">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="sIP" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="sComputerName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="sUserID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="sRegKey" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="iQty" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="sAppVersion" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="RecordUsageAResponse">
+        <s:complexType />
+      </s:element>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="KeyGenSoapIn">
+    <wsdl:part name="parameters" element="tns:KeyGen" />
+  </wsdl:message>
+  <wsdl:message name="KeyGenSoapOut">
+    <wsdl:part name="parameters" element="tns:KeyGenResponse" />
+  </wsdl:message>
+  <wsdl:message name="NewGUIDSoapIn">
+    <wsdl:part name="parameters" element="tns:NewGUID" />
+  </wsdl:message>
+  <wsdl:message name="NewGUIDSoapOut">
+    <wsdl:part name="parameters" element="tns:NewGUIDResponse" />
+  </wsdl:message>
+  <wsdl:message name="RecordUsageSoapIn">
+    <wsdl:part name="parameters" element="tns:RecordUsage" />
+  </wsdl:message>
+  <wsdl:message name="RecordUsageSoapOut">
+    <wsdl:part name="parameters" element="tns:RecordUsageResponse" />
+  </wsdl:message>
+  <wsdl:message name="RecordUsageASoapIn">
+    <wsdl:part name="parameters" element="tns:RecordUsageA" />
+  </wsdl:message>
+  <wsdl:message name="RecordUsageASoapOut">
+    <wsdl:part name="parameters" element="tns:RecordUsageAResponse" />
+  </wsdl:message>
+  <wsdl:portType name="keygenSoap">
+    <wsdl:operation name="KeyGen">
+      <wsdl:input message="tns:KeyGenSoapIn" />
+      <wsdl:output message="tns:KeyGenSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="NewGUID">
+      <wsdl:input message="tns:NewGUIDSoapIn" />
+      <wsdl:output message="tns:NewGUIDSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="RecordUsage">
+      <wsdl:input message="tns:RecordUsageSoapIn" />
+      <wsdl:output message="tns:RecordUsageSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="RecordUsageA">
+      <wsdl:input message="tns:RecordUsageASoapIn" />
+      <wsdl:output message="tns:RecordUsageASoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="keygenSoap" type="tns:keygenSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="KeyGen">
+      <soap:operation soapAction="http://tempuri.org/KeyGen" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="NewGUID">
+      <soap:operation soapAction="http://tempuri.org/NewGUID" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RecordUsage">
+      <soap:operation soapAction="http://tempuri.org/RecordUsage" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RecordUsageA">
+      <soap:operation soapAction="http://tempuri.org/RecordUsageA" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="keygenSoap12" type="tns:keygenSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="KeyGen">
+      <soap12:operation soapAction="http://tempuri.org/KeyGen" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="NewGUID">
+      <soap12:operation soapAction="http://tempuri.org/NewGUID" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RecordUsage">
+      <soap12:operation soapAction="http://tempuri.org/RecordUsage" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RecordUsageA">
+      <soap12:operation soapAction="http://tempuri.org/RecordUsageA" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="keygen">
+    <wsdl:port name="keygenSoap" binding="tns:keygenSoap">
+      <soap:address location="http://www.archisoft.co.uk/keygen.asmx" />
+    </wsdl:port>
+    <wsdl:port name="keygenSoap12" binding="tns:keygenSoap12">
+      <soap12:address location="http://www.archisoft.co.uk/keygen.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
