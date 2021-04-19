@@ -19,18 +19,18 @@ Friend NotInheritable Class EventTracker
     ' Store references to the folder objects so that we can receive their events.
     ' If we do not maintain references to these items, then we cannot reliably 
     ' receive the add, change, and remove events.
-    Private m_inboxItems As Outlook.Items
-    Private m_sentItems As Outlook.Items
+    Private _inboxItems As Outlook.Items
+    Private _sentItems As Outlook.Items
     'Private m_contactsItems As Outlook.Items
     'Private m_tasksItems As Outlook.Items
     'Private m_calendarItems As Outlook.Items
 
-    Private m_Exp As Outlook.Explorer
-    Private m_app As ThisAddIn
+    Private _exp As Outlook.Explorer
+    Private _app As ThisAddIn
 
-    Private bMonitorSentItems As Boolean = True
-    Private bAskedToMonitor As Boolean = False
-    Private iSentItemsCancelCount As Integer = 0
+    Private _monitorSentItems As Boolean = True
+    Private _askedToMonitor As Boolean = False
+    Private _sentItemsCancelCount As Integer = 0
 
     Private m_SentMailStack() As Outlook.MailItem
 
@@ -38,11 +38,11 @@ Friend NotInheritable Class EventTracker
     ''' Constructor.
     ''' </summary>
     ''' <param name="app">Reference to the main Outlook application object</param>
-    Friend Sub New(ByVal app As ThisAddin)
-        m_app = app
+    Friend Sub New(ByVal app As ThisAddIn)
+        _app = app
 
-        m_Exp = app.Application.ActiveExplorer
-        AddHandler m_Exp.SelectionChange, AddressOf ExplorerSelectionChange
+        _exp = app.Application.ActiveExplorer
+        AddHandler _exp.SelectionChange, AddressOf ExplorerSelectionChange
 
         ' Obtain references to the folder objects that fire the events we are interested in.
         Dim mapiNamespace As Outlook.NameSpace = app.Application.GetNamespace("MAPI")
@@ -50,29 +50,29 @@ Friend NotInheritable Class EventTracker
         Dim sentitems As Outlook.Folder = TryCast(mapiNamespace.GetDefaultFolder(Outlook.OlDefaultFolders.olFolderSentMail), Outlook.Folder)
 
         ' Store references to the item collection objects.
-        m_inboxItems = inbox.Items
-        m_sentItems = sentitems.Items
+        _inboxItems = inbox.Items
+        _sentItems = sentitems.Items
 
         ' Subscribe to the ItemAdd events.
         ' Note that there are cases in which the ItemAdd event is not raised. For example, if multiple
         ' items are created or received, then the ItemAdd event may be raised only once.
         ' See http://support.microsoft.com/?kbid=249156 for details.
-        AddHandler m_inboxItems.ItemAdd, New Outlook.ItemsEvents_ItemAddEventHandler(AddressOf InboxFolderItemAdded)
-        AddHandler m_sentItems.ItemAdd, New Outlook.ItemsEvents_ItemAddEventHandler(AddressOf SentItemsFolderItemAdded)
+        AddHandler _inboxItems.ItemAdd, New Outlook.ItemsEvents_ItemAddEventHandler(AddressOf InboxFolderItemAdded)
+        AddHandler _sentItems.ItemAdd, New Outlook.ItemsEvents_ItemAddEventHandler(AddressOf SentItemsFolderItemAdded)
 
         ' Subscribe to the ItemChange events.
-        AddHandler m_inboxItems.ItemChange, New Microsoft.Office.Interop.Outlook.ItemsEvents_ItemChangeEventHandler(AddressOf InboxItemsItemChange)
-        AddHandler m_sentItems.ItemChange, New Microsoft.Office.Interop.Outlook.ItemsEvents_ItemChangeEventHandler(AddressOf SentItemsItemChange)
+        AddHandler _inboxItems.ItemChange, New Microsoft.Office.Interop.Outlook.ItemsEvents_ItemChangeEventHandler(AddressOf InboxItemsItemChange)
+        AddHandler _sentItems.ItemChange, New Microsoft.Office.Interop.Outlook.ItemsEvents_ItemChangeEventHandler(AddressOf SentItemsItemChange)
 
         ' Subscribe to the ItemRemove events.
-        AddHandler m_inboxItems.ItemRemove, New Microsoft.Office.Interop.Outlook.ItemsEvents_ItemRemoveEventHandler(AddressOf InboxItemsItemRemove)
-        AddHandler m_sentItems.ItemRemove, New Microsoft.Office.Interop.Outlook.ItemsEvents_ItemRemoveEventHandler(AddressOf SentItemsItemRemove)
+        AddHandler _inboxItems.ItemRemove, New Microsoft.Office.Interop.Outlook.ItemsEvents_ItemRemoveEventHandler(AddressOf InboxItemsItemRemove)
+        AddHandler _sentItems.ItemRemove, New Microsoft.Office.Interop.Outlook.ItemsEvents_ItemRemoveEventHandler(AddressOf SentItemsItemRemove)
 
     End Sub
 
     Private Sub ExplorerSelectionChange()
         Dim exp As Outlook.Explorer
-        exp = m_app.Application.ActiveExplorer
+        exp = _app.Application.ActiveExplorer
 
         Dim selectedFolder As Outlook.Folder = exp.CurrentFolder
 
@@ -168,11 +168,11 @@ Friend NotInheritable Class EventTracker
                 'check if this is a duplicate mailitem or not.  
                 'handling a bug from google apps
                 If m_olLastItem IsNot Nothing Then
-                    If m_olLastItem.SenderName = m_olMailItem.SenderName And _
-                        m_olLastItem.To = m_olMailItem.To And _
-                        m_olLastItem.SentOn = m_olMailItem.SentOn And _
-                        m_olLastItem.Subject = m_olMailItem.Subject And _
-                        m_olLastItem.Attachments.Count = m_olMailItem.Attachments.Count And _
+                    If m_olLastItem.SenderName = m_olMailItem.SenderName And
+                        m_olLastItem.To = m_olMailItem.To And
+                        m_olLastItem.SentOn = m_olMailItem.SentOn And
+                        m_olLastItem.Subject = m_olMailItem.Subject And
+                        m_olLastItem.Attachments.Count = m_olMailItem.Attachments.Count And
                         m_olLastItem.Body = m_olMailItem.Body Then
                         'we seem to have a duplicate message so ingore it
                         Exit Sub
@@ -184,45 +184,45 @@ Friend NotInheritable Class EventTracker
                 End If
 
                 'check if we should monitor sent items.
-                If bMonitorSentItems = False Then
-                        Exit Sub
-                    End If
+                If _monitorSentItems = False Then
+                    Exit Sub
+                End If
 
-                    Dim frmMain As New frmMain()
+                Dim frmMain As New frmMain()
 
-                    'TODO: check if the form is already visible
+                'TODO: check if the form is already visible
 
-                    'TODO: form is already visible so add sent item to stack
+                'TODO: form is already visible so add sent item to stack
 
-                    With frmMain
-                        .m_olMailItem = m_olMailItem
-                        .bBatchFile = False
-                        .bSentMail = True
+                With frmMain
+                    .m_olMailItem = m_olMailItem
+                    .bBatchFile = False
+                    .bSentMail = True
 
-                        If .ShowDialog = DialogResult.Cancel Then
+                    If .ShowDialog = DialogResult.Cancel Then
 
-                            'check for user wanting to stop monitoring folder
-                            If iSentItemsCancelCount + 1 >= 5 Then
-                                If bMonitorSentItems = True And bAskedToMonitor = False Then
-                                    If MsgBox("You have cancelled saving the last 5 sent messages. Would you like to stop monitoring sent emails until Outlook is restarted?", MsgBoxStyle.YesNo) = MsgBoxResult.Yes Then
-                                        iSentItemsCancelCount = iSentItemsCancelCount + 1
-                                        bMonitorSentItems = False
-                                    Else
-                                        bMonitorSentItems = True
-                                    End If
-
-                                    bAskedToMonitor = True
+                        'check for user wanting to stop monitoring folder
+                        If _sentItemsCancelCount + 1 >= 5 Then
+                            If _monitorSentItems = True And _askedToMonitor = False Then
+                                If MsgBox("You have cancelled saving the last 5 sent messages. Would you like to stop monitoring sent emails until Outlook is restarted?", MsgBoxStyle.YesNo) = MsgBoxResult.Yes Then
+                                    _sentItemsCancelCount = _sentItemsCancelCount + 1
+                                    _monitorSentItems = False
+                                Else
+                                    _monitorSentItems = True
                                 End If
-                            Else
-                                iSentItemsCancelCount = iSentItemsCancelCount + 1
-                            End If
 
+                                _askedToMonitor = True
+                            End If
                         Else
-                            iSentItemsCancelCount = 0
+                            _sentItemsCancelCount = _sentItemsCancelCount + 1
                         End If
 
-                        .Dispose()
-                    End With
+                    Else
+                        _sentItemsCancelCount = 0
+                    End If
+
+                    .Dispose()
+                End With
 
 
                 m_olLastItem = m_olMailItem
@@ -307,7 +307,7 @@ Friend NotInheritable Class EventTracker
         'MessageBox.Show("A mail item has been removed.")
     End Sub
 
-   #End Region
+#End Region
 
 
     Private Sub FileSentItemInStack(ByRef m_olMailItem As Outlook.MailItem)
@@ -315,11 +315,11 @@ Friend NotInheritable Class EventTracker
         'check if this is a duplicate mailitem or not.  
         'handling a bug from google apps
         If m_olLastItem IsNot Nothing Then
-            If m_olLastItem.SenderName = m_olMailItem.SenderName And _
-                m_olLastItem.To = m_olMailItem.To And _
-                m_olLastItem.SentOn = m_olMailItem.SentOn And _
-                m_olLastItem.Subject = m_olMailItem.Subject And _
-                m_olLastItem.Attachments.Count = m_olMailItem.Attachments.Count And _
+            If m_olLastItem.SenderName = m_olMailItem.SenderName And
+                m_olLastItem.To = m_olMailItem.To And
+                m_olLastItem.SentOn = m_olMailItem.SentOn And
+                m_olLastItem.Subject = m_olMailItem.Subject And
+                m_olLastItem.Attachments.Count = m_olMailItem.Attachments.Count And
                 m_olLastItem.Body = m_olMailItem.Body Then
                 'we seem to have a duplicate message so ingore it
                 Exit Sub
@@ -331,42 +331,42 @@ Friend NotInheritable Class EventTracker
         End If
 
         'check if we should monitor sent items.
-        If bMonitorSentItems = False Then
-                Exit Sub
-            End If
+        If _monitorSentItems = False Then
+            Exit Sub
+        End If
 
-            Dim frmMain As New frmMain()
+        Dim frmMain As New frmMain()
 
-            'TODO: check if the form is already visible
+        'TODO: check if the form is already visible
 
-            'TODO: form is already visible so add sent item to stack
+        'TODO: form is already visible so add sent item to stack
 
-            With frmMain
-                .m_olMailItem = m_olMailItem
-                .bBatchFile = False
-                .bSentMail = True
+        With frmMain
+            .m_olMailItem = m_olMailItem
+            .bBatchFile = False
+            .bSentMail = True
 
-                If .ShowDialog = DialogResult.Cancel Then
+            If .ShowDialog = DialogResult.Cancel Then
 
-                    'check for user wanting to stop monitoring folder
-                    If iSentItemsCancelCount + 1 >= 5 Then
-                        If bMonitorSentItems = True And bAskedToMonitor = False Then
-                            If MsgBox("You have cancelled saving the last 5 sent messages. Would you like to stop monitoring sent emails until Outlook is restarted?", MsgBoxStyle.YesNo) = MsgBoxResult.Yes Then
-                                iSentItemsCancelCount = iSentItemsCancelCount + 1
-                                bMonitorSentItems = False
-                            Else
-                                bMonitorSentItems = True
-                            End If
-
-                            bAskedToMonitor = True
+                'check for user wanting to stop monitoring folder
+                If _sentItemsCancelCount + 1 >= 5 Then
+                    If _monitorSentItems = True And _askedToMonitor = False Then
+                        If MsgBox("You have cancelled saving the last 5 sent messages. Would you like to stop monitoring sent emails until Outlook is restarted?", MsgBoxStyle.YesNo) = MsgBoxResult.Yes Then
+                            _sentItemsCancelCount = _sentItemsCancelCount + 1
+                            _monitorSentItems = False
+                        Else
+                            _monitorSentItems = True
                         End If
-                    Else
-                        iSentItemsCancelCount = iSentItemsCancelCount + 1
-                    End If
 
+                        _askedToMonitor = True
+                    End If
                 Else
-                    iSentItemsCancelCount = 0
+                    _sentItemsCancelCount = _sentItemsCancelCount + 1
                 End If
+
+            Else
+                _sentItemsCancelCount = 0
+            End If
 
                 .Dispose()
             End With
