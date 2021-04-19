@@ -20,7 +20,6 @@ Module modCommon
     Public mapiNamespace As Outlook.NameSpace = Globals.ThisAddIn.Application.GetNamespace("MAPI")
     Public sDeletedItems As String = "Deleted Items (eMail Manager)"
     Public emDeletedItems As Outlook.Folder
-    'Dim mapiNamespace As Outlook.NameSpace = Globals.ThisAddIn.Application.GetNamespace("MAPI")
     Public olInbox As Outlook.Folder = TryCast(mapiNamespace.GetDefaultFolder(Outlook.OlDefaultFolders.olFolderInbox), Outlook.Folder)
     Public olDeletedItems As Outlook.Folder = TryCast(mapiNamespace.GetDefaultFolder(Outlook.OlDefaultFolders.olFolderDeletedItems), Outlook.Folder)
 
