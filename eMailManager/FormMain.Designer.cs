@@ -69,7 +69,7 @@ namespace eMailManager
             this.checkboxLeaveCopy.AutoSize = true;
             this.checkboxLeaveCopy.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.checkboxLeaveCopy.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.checkboxLeaveCopy.Location = new System.Drawing.Point(522, 390);
+            this.checkboxLeaveCopy.Location = new System.Drawing.Point(506, 351);
             this.checkboxLeaveCopy.Margin = new System.Windows.Forms.Padding(0, 3, 0, 3);
             this.checkboxLeaveCopy.Name = "checkboxLeaveCopy";
             this.checkboxLeaveCopy.Size = new System.Drawing.Size(172, 17);
@@ -91,7 +91,7 @@ namespace eMailManager
             this.GroupBoxMessageDetails.Margin = new System.Windows.Forms.Padding(0, 3, 0, 3);
             this.GroupBoxMessageDetails.Name = "GroupBoxMessageDetails";
             this.GroupBoxMessageDetails.Padding = new System.Windows.Forms.Padding(0, 3, 0, 3);
-            this.GroupBoxMessageDetails.Size = new System.Drawing.Size(686, 76);
+            this.GroupBoxMessageDetails.Size = new System.Drawing.Size(670, 76);
             this.GroupBoxMessageDetails.TabIndex = 19;
             this.GroupBoxMessageDetails.TabStop = false;
             this.GroupBoxMessageDetails.Text = "Message Details:";
@@ -100,7 +100,7 @@ namespace eMailManager
             // 
             this.labelMailTo.AutoSize = true;
             this.labelMailTo.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.labelMailTo.Location = new System.Drawing.Point(85, 36);
+            this.labelMailTo.Location = new System.Drawing.Point(67, 36);
             this.labelMailTo.Margin = new System.Windows.Forms.Padding(0);
             this.labelMailTo.Name = "labelMailTo";
             this.labelMailTo.Size = new System.Drawing.Size(54, 13);
@@ -111,7 +111,7 @@ namespace eMailManager
             // 
             this.labelMailSubject.AutoSize = true;
             this.labelMailSubject.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.labelMailSubject.Location = new System.Drawing.Point(85, 54);
+            this.labelMailSubject.Location = new System.Drawing.Point(67, 54);
             this.labelMailSubject.Margin = new System.Windows.Forms.Padding(0);
             this.labelMailSubject.Name = "labelMailSubject";
             this.labelMailSubject.Size = new System.Drawing.Size(80, 13);
@@ -122,7 +122,7 @@ namespace eMailManager
             // 
             this.labelMailFrom.AutoSize = true;
             this.labelMailFrom.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.labelMailFrom.Location = new System.Drawing.Point(85, 18);
+            this.labelMailFrom.Location = new System.Drawing.Point(67, 18);
             this.labelMailFrom.Margin = new System.Windows.Forms.Padding(0);
             this.labelMailFrom.Name = "labelMailFrom";
             this.labelMailFrom.Size = new System.Drawing.Size(68, 13);
@@ -170,7 +170,7 @@ namespace eMailManager
             this.buttonFileMessage.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonFileMessage.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold);
             this.buttonFileMessage.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.buttonFileMessage.Location = new System.Drawing.Point(579, 419);
+            this.buttonFileMessage.Location = new System.Drawing.Point(563, 380);
             this.buttonFileMessage.Margin = new System.Windows.Forms.Padding(0, 3, 0, 3);
             this.buttonFileMessage.Name = "buttonFileMessage";
             this.buttonFileMessage.Size = new System.Drawing.Size(117, 73);
@@ -185,7 +185,7 @@ namespace eMailManager
             this.btnDelete.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnDelete.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.btnDelete.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnDelete.Location = new System.Drawing.Point(457, 419);
+            this.btnDelete.Location = new System.Drawing.Point(441, 380);
             this.btnDelete.Margin = new System.Windows.Forms.Padding(0, 3, 0, 3);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(113, 29);
@@ -201,11 +201,11 @@ namespace eMailManager
             this.GroupBoxWorkflow.Controls.Add(this.rdoWorkflow01);
             this.GroupBoxWorkflow.Controls.Add(this.rdoWorkflow03);
             this.GroupBoxWorkflow.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.GroupBoxWorkflow.Location = new System.Drawing.Point(9, 388);
+            this.GroupBoxWorkflow.Location = new System.Drawing.Point(9, 334);
             this.GroupBoxWorkflow.Margin = new System.Windows.Forms.Padding(0, 3, 0, 3);
             this.GroupBoxWorkflow.Name = "GroupBoxWorkflow";
             this.GroupBoxWorkflow.Padding = new System.Windows.Forms.Padding(0, 3, 0, 3);
-            this.GroupBoxWorkflow.Size = new System.Drawing.Size(434, 105);
+            this.GroupBoxWorkflow.Size = new System.Drawing.Size(418, 120);
             this.GroupBoxWorkflow.TabIndex = 18;
             this.GroupBoxWorkflow.TabStop = false;
             this.GroupBoxWorkflow.Text = "Workflow:";
@@ -218,10 +218,10 @@ namespace eMailManager
             this.rdoWorkflow02.Checked = true;
             this.rdoWorkflow02.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.rdoWorkflow02.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.rdoWorkflow02.Location = new System.Drawing.Point(8, 40);
+            this.rdoWorkflow02.Location = new System.Drawing.Point(8, 43);
             this.rdoWorkflow02.Margin = new System.Windows.Forms.Padding(0, 3, 0, 3);
             this.rdoWorkflow02.Name = "rdoWorkflow02";
-            this.rdoWorkflow02.Size = new System.Drawing.Size(420, 30);
+            this.rdoWorkflow02.Size = new System.Drawing.Size(404, 30);
             this.rdoWorkflow02.TabIndex = 1;
             this.rdoWorkflow02.TabStop = true;
             this.rdoWorkflow02.Text = "File message and attachments separately (save the attachments in file system)";
@@ -237,7 +237,7 @@ namespace eMailManager
             this.rdoWorkflow01.Location = new System.Drawing.Point(8, 11);
             this.rdoWorkflow01.Margin = new System.Windows.Forms.Padding(0, 3, 0, 3);
             this.rdoWorkflow01.Name = "rdoWorkflow01";
-            this.rdoWorkflow01.Size = new System.Drawing.Size(420, 34);
+            this.rdoWorkflow01.Size = new System.Drawing.Size(404, 34);
             this.rdoWorkflow01.TabIndex = 1;
             this.rdoWorkflow01.Text = "File message (any attachments remain embedded)";
             this.rdoWorkflow01.UseVisualStyleBackColor = false;
@@ -249,10 +249,10 @@ namespace eMailManager
             this.rdoWorkflow03.BackColor = System.Drawing.SystemColors.Control;
             this.rdoWorkflow03.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.rdoWorkflow03.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.rdoWorkflow03.Location = new System.Drawing.Point(8, 69);
+            this.rdoWorkflow03.Location = new System.Drawing.Point(8, 80);
             this.rdoWorkflow03.Margin = new System.Windows.Forms.Padding(0, 3, 0, 3);
             this.rdoWorkflow03.Name = "rdoWorkflow03";
-            this.rdoWorkflow03.Size = new System.Drawing.Size(420, 30);
+            this.rdoWorkflow03.Size = new System.Drawing.Size(404, 30);
             this.rdoWorkflow03.TabIndex = 1;
             this.rdoWorkflow03.Text = "File message and attachments separately (keep a copy of attachments in message)";
             this.rdoWorkflow03.UseVisualStyleBackColor = false;
@@ -271,7 +271,7 @@ namespace eMailManager
             this.GroupBoxLocation.Margin = new System.Windows.Forms.Padding(0, 3, 0, 3);
             this.GroupBoxLocation.Name = "GroupBoxLocation";
             this.GroupBoxLocation.Padding = new System.Windows.Forms.Padding(0, 3, 0, 3);
-            this.GroupBoxLocation.Size = new System.Drawing.Size(686, 290);
+            this.GroupBoxLocation.Size = new System.Drawing.Size(670, 234);
             this.GroupBoxLocation.TabIndex = 14;
             this.GroupBoxLocation.TabStop = false;
             this.GroupBoxLocation.Text = "Location:";
@@ -289,7 +289,7 @@ namespace eMailManager
             this.sfDataGrid1.Location = new System.Drawing.Point(11, 46);
             this.sfDataGrid1.Margin = new System.Windows.Forms.Padding(0, 3, 0, 3);
             this.sfDataGrid1.Name = "sfDataGrid1";
-            this.sfDataGrid1.Size = new System.Drawing.Size(665, 238);
+            this.sfDataGrid1.Size = new System.Drawing.Size(649, 182);
             this.sfDataGrid1.TabIndex = 10;
             this.sfDataGrid1.Text = "sfDataGrid1";
             this.sfDataGrid1.ValidationMode = Syncfusion.WinForms.DataGrid.Enums.GridValidationMode.InEdit;
@@ -300,7 +300,7 @@ namespace eMailManager
             this.btnBrowse.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnBrowse.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnBrowse.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnBrowse.Location = new System.Drawing.Point(481, 16);
+            this.btnBrowse.Location = new System.Drawing.Point(465, 16);
             this.btnBrowse.Margin = new System.Windows.Forms.Padding(0, 3, 0, 3);
             this.btnBrowse.Name = "btnBrowse";
             this.btnBrowse.Size = new System.Drawing.Size(195, 24);
@@ -341,7 +341,7 @@ namespace eMailManager
             this.btnCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnCancel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.btnCancel.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnCancel.Location = new System.Drawing.Point(457, 454);
+            this.btnCancel.Location = new System.Drawing.Point(441, 415);
             this.btnCancel.Margin = new System.Windows.Forms.Padding(0, 3, 0, 3);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(113, 38);
@@ -352,17 +352,17 @@ namespace eMailManager
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripProgressBar1});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 498);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 459);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Padding = new System.Windows.Forms.Padding(0);
-            this.statusStrip1.Size = new System.Drawing.Size(705, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(689, 22);
             this.statusStrip1.TabIndex = 22;
             this.statusStrip1.Text = "statusStrip1";
             // 
             // toolStripProgressBar1
             // 
             this.toolStripProgressBar1.Name = "toolStripProgressBar1";
-            this.toolStripProgressBar1.Size = new System.Drawing.Size(0, 16);
+            this.toolStripProgressBar1.Size = new System.Drawing.Size(650, 16);
             this.toolStripProgressBar1.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
             this.toolStripProgressBar1.Visible = false;
             // 
@@ -371,7 +371,7 @@ namespace eMailManager
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = global::eMailManager.Properties.Settings.Default.FormBackColor;
-            this.ClientSize = new System.Drawing.Size(705, 520);
+            this.ClientSize = new System.Drawing.Size(689, 481);
             this.ControlBox = false;
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.checkboxLeaveCopy);
@@ -386,6 +386,7 @@ namespace eMailManager
             this.ForeColor = global::eMailManager.Properties.Settings.Default.FormForeColour;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(0, 3, 0, 3);
+            this.MinimumSize = new System.Drawing.Size(705, 520);
             this.Name = "FormMain";
             this.Text = "eMail Manager";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormMain_FormClosing);

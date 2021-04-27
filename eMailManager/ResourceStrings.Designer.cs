@@ -259,7 +259,7 @@ namespace eMailManager {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to File message and attachments separately (removes and saves the attachments in file system).
+        ///   Looks up a localized string similar to File message and attachments separately (keep a copy of attachments in message).
         /// </summary>
         internal static string WorkFlow02 {
             get {
@@ -268,20 +268,11 @@ namespace eMailManager {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to File message and attachments separately (keep a copy of attachments in message).
+        ///   Looks up a localized string similar to File message and strip attachments from the message (removes and saves the attachments in file systes).
         /// </summary>
         internal static string WorkFlow03 {
             get {
                 return ResourceManager.GetString("WorkFlow03", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to File message and strip attachments from the message (removes the attachments).
-        /// </summary>
-        internal static string WorkFlow03a {
-            get {
-                return ResourceManager.GetString("WorkFlow03a", resourceCulture);
             }
         }
     }

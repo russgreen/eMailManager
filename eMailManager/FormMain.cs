@@ -75,8 +75,6 @@ namespace eMailManager
             //configure from settings
             this.Width = GlobalConfig.GlobalSettings.FormWidth;
             this.Height = GlobalConfig.GlobalSettings.FormHeight;
-            //this.chkLeaveCopy.Checked = GlobalConfig.GlobalSettings.LeaveCopy;
-            //this.radioFileFolder.Checked = GlobalConfig.GlobalSettings.UseFileSystem;
 
             //get the list of saved folder locations
             GlobalConfig.LoadMRU();
@@ -91,7 +89,6 @@ namespace eMailManager
 
             GlobalConfig.GlobalSettings.FormHeight = this.Height;
             GlobalConfig.GlobalSettings.FormWidth = this.Width;
-            //GlobalConfig.GlobalSettings.UseFileSystem = this.radioFileFolder.Checked;
 
             GlobalConfig.SaveSettings();
         }
@@ -124,11 +121,11 @@ namespace eMailManager
             rdoWorkflow01.Enabled = true;
             rdoWorkflow01.Text = GlobalConfig.localResourceManager.GetString("WorkFlow01"); // "File message (any attachments remain embedded)"
             rdoWorkflow02.Enabled = true;
-            rdoWorkflow02.Text = GlobalConfig.localResourceManager.GetString("WorkFlow02"); // "File message and attachments separately (save the attachments in file system)"
+            rdoWorkflow02.Text = GlobalConfig.localResourceManager.GetString("WorkFlow02"); // "File message and attachments separately (keep a copy of attachments in message)"
             rdoWorkflow03.Enabled = true;
-            rdoWorkflow03.Text = GlobalConfig.localResourceManager.GetString("WorkFlow03"); // "File message and attachments separately (keep a copy of attachments in message)"
+            rdoWorkflow03.Text = GlobalConfig.localResourceManager.GetString("WorkFlow03"); // "File message and strip attachments from the message (removes and saves the attachments in file systes)"
 
-            if(_batchFile == false)
+            if (_batchFile == false)
             {
                 //check if we are saving to an outlook folder or a file system folder
                 if (radioOutlookFolder.Checked == true)
@@ -141,33 +138,10 @@ namespace eMailManager
                     //saving to a file system folder
                     checkboxLeaveCopy.Visible = true;
                 }
-
-                //handle sent items with attachments
-                if (_sentMail == true)
-                {
-                    if (GlobalConfig.GlobalSettings.AlwaysEmbedAttachments == true)
-                    {
-                        rdoWorkflow01.Checked = true;
-                        rdoWorkflow03.Text = GlobalConfig.localResourceManager.GetString("WorkFlow03"); // "File message and attachments separately (keep a copy of attachments in message)"
-                    }
-                    else
-                    {
-                       if (HasNonEmbeddedAttachments() == true)
-                        {
-                            rdoWorkflow03.Checked = true;
-                            rdoWorkflow03.Text = GlobalConfig.localResourceManager.GetString("WorkFlow03a"); // "File message and strip attachments from the message (removes the attachments)"
-                        }
-                        else
-                        {
-                            rdoWorkflow01.Checked = true;
-                            rdoWorkflow03.Text = GlobalConfig.localResourceManager.GetString("WorkFlow03");
-                        } 
-                    }
-                }
             }
             else
             {
-                rdoWorkflow01.Checked = true;
+                //disable workflows that won't play nice with batch file
                 rdoWorkflow02.Enabled = false;
                 rdoWorkflow03.Enabled = false;
 
@@ -418,26 +392,26 @@ namespace eMailManager
             _mailItem.Save();
         }
 
-        private void HandleSavedMSG()
+        private void HandleSavedMSG(Outlook.MailItem mailItem)
         {
             if (GlobalConfig.GlobalSettings.LeaveCopy == false)
             {
                 try
                 {
-                    _mailItem.Move(GlobalConfig.DeletedItemsFolder);
+                    mailItem.Move(GlobalConfig.DeletedItemsFolder);
                 }
                 catch
                 {
-                    _mailItem.Move(GlobalConfig.OlDeletedItems);
+                    mailItem.Move(GlobalConfig.OlDeletedItems);
                 }
             }
             else
             {
                 {
-                    _mailItem.UserProperties.Add("emfiled", Outlook.OlUserPropertyType.olYesNo);
-                    _mailItem.UserProperties["emfiled"].Value = true;
-                    _mailItem.Categories = GlobalConfig.GlobalSettings.ArchivedAndRetainedCategory;
-                    _mailItem.Save();
+                    mailItem.UserProperties.Add("emfiled", Outlook.OlUserPropertyType.olYesNo);
+                    mailItem.UserProperties["emfiled"].Value = true;
+                    mailItem.Categories = GlobalConfig.GlobalSettings.ArchivedAndRetainedCategory;
+                    mailItem.Save();
                 }
             }
         }
@@ -447,7 +421,7 @@ namespace eMailManager
             if(this.radioFileFolder.Checked == true) // FILE INTO FILE SYSTEM
             {
                 //parse the filename
-                var msgFilename = CommonMethods.ParseFilename(GlobalConfig.GlobalSettings.FilenameFilter, _mailItem, _sentMail);
+                var msgFilename = CommonMethods.ParseFilename(GlobalConfig.GlobalSettings.FilenameFilter, mailItem, _sentMail);
                 if (msgFilename.EndsWith(GlobalConfig.GlobalSettings.MessageFileExt) == false)
                 {
                     msgFilename += GlobalConfig.GlobalSettings.MessageFileExt;
@@ -485,38 +459,39 @@ namespace eMailManager
 
                 if (this.rdoWorkflow01.Checked) // file message with attachments embedded
                 {
-                    _mailItem.SaveAs(tempMsgFilename, GlobalConfig.GlobalSettings.MessageSaveAsType);
-                    HandleSavedMSG();
+                    mailItem.SaveAs(tempMsgFilename, GlobalConfig.GlobalSettings.MessageSaveAsType);
+                    HandleSavedMSG(mailItem);
                 }
-                else if (rdoWorkflow02.Checked) // file message with attachments removed and saved in file system
+                else if (rdoWorkflow02.Checked) // file message with attachments embedded and saved in file system
                 {
                     if (HasNonEmbeddedAttachments() == true)
                     {
                         if (MessageBox.Show(GlobalConfig.localResourceManager.GetString("Message004"), "Save Attachments", MessageBoxButtons.YesNo) == DialogResult.Yes)
                         {
                             ExtractAttachments(false);
-                            if (GlobalConfig.GlobalSettings.MessageSaveAsType == 3)
-                            {
-                                RemoveAttachments();
-                            }
+                            //if (GlobalConfig.GlobalSettings.MessageSaveAsType == 3)
+                            //{
+                            //    RemoveAttachments();
+                            //}
                         }
                         else
                         {
-                            if (ExtractAttachments(true) == true)
-                            {
-                                if (GlobalConfig.GlobalSettings.MessageSaveAsType == 3)
-                                {
-                                    RemoveAttachments();
-                                }
-                            }
+                            ExtractAttachments(true);
+                            //if (ExtractAttachments(true) == true)
+                            //{
+                            //    if (GlobalConfig.GlobalSettings.MessageSaveAsType == 3)
+                            //    {
+                            //        RemoveAttachments();
+                            //    }
+                            //}
                         }
                     }
 
                     // m_olMailItem.SaveAs(sSaveMsgFilename, cSettings.MessageSaveAsType)
-                    _mailItem.SaveAs(tempMsgFilename, GlobalConfig.GlobalSettings.MessageSaveAsType);
-                    HandleSavedMSG();
+                    mailItem.SaveAs(tempMsgFilename, GlobalConfig.GlobalSettings.MessageSaveAsType);
+                    HandleSavedMSG(mailItem);
                 }
-                else if (rdoWorkflow03.Checked) // file message with attachments embedded and copy saved in file system
+                else if (rdoWorkflow03.Checked) // file message with attachments removed and saved in file system
                 {
                     if(_sentMail == true)
                     {
@@ -525,23 +500,27 @@ namespace eMailManager
                             RemoveAttachments();
                         }
 
-                        _mailItem.SaveAs(tempMsgFilename, GlobalConfig.GlobalSettings.MessageSaveAsType);
-                        HandleSavedMSG();
+                        mailItem.SaveAs(tempMsgFilename, GlobalConfig.GlobalSettings.MessageSaveAsType);
+                        HandleSavedMSG(mailItem);
                     }
                     else
                     {
-                        _mailItem.SaveAs(tempMsgFilename, GlobalConfig.GlobalSettings.MessageSaveAsType);
-
-                        if (MessageBox.Show(GlobalConfig.localResourceManager.GetString("Message004"), "Save Attachments", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                        if (HasNonEmbeddedAttachments() == true)
                         {
-                            ExtractAttachments(false);
-                        }
-                        else
-                        {
-                            ExtractAttachments(true);
-                        }
+                            if (MessageBox.Show(GlobalConfig.localResourceManager.GetString("Message004"), "Save Attachments", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                            {
+                                ExtractAttachments(false);
+                            }
+                            else
+                            {
+                                ExtractAttachments(true);
+                            }
 
-                        HandleSavedMSG();
+                            RemoveAttachments();
+                        }
+                        
+                        mailItem.SaveAs(tempMsgFilename, GlobalConfig.GlobalSettings.MessageSaveAsType);
+                        HandleSavedMSG(mailItem);
                     }
                 }
 
@@ -550,7 +529,7 @@ namespace eMailManager
                 {
                     var fileinfo = new FileInfo(tempMsgFilename);
                     fileinfo.MoveTo(saveMsgFilename);
-                    fileinfo.CreationTime =_mailItem.SentOn;
+                    fileinfo.CreationTime = mailItem.SentOn;
                 }
                 catch (Exception ex)
                 {
@@ -580,10 +559,10 @@ namespace eMailManager
                     
                     if (objFolder is object)
                     {
-                        _mailItem.Move(objFolder);
+                        mailItem.Move(objFolder);
                     }
                 }
-                else if (rdoWorkflow02.Checked) // file message with attachments removed and saved in file system
+                else if (rdoWorkflow02.Checked) // file message with attachments embedded and saved in file system
                 {
                     Outlook.Folder objFolder;
                     Outlook.NameSpace objNS;
@@ -603,16 +582,19 @@ namespace eMailManager
                     {
                         if (HasNonEmbeddedAttachments() == true)
                         {
-                            // now remove attachments from the message.
-                            if (ExtractAttachments(true) == true)
-                            {
-                                RemoveAttachments();
-                                _mailItem.Move(objFolder);
-                            }
+                            ExtractAttachments(true);
+                            mailItem.Move(objFolder);
+
+                            //// now remove attachments from the message.
+                            //if (ExtractAttachments(true) == true)
+                            //{
+                            //    RemoveAttachments();
+                            //    mailItem.Move(objFolder);
+                            //}
                         }
                     }
                 }
-                else if (rdoWorkflow03.Checked) // file message with attachments embedded and copy saved in file system
+                else if (rdoWorkflow03.Checked) // file message with attachments removed and saved in file system
                 {
                     Outlook.Folder objFolder;
                     Outlook.NameSpace objNS;
@@ -638,16 +620,25 @@ namespace eMailManager
                                 RemoveAttachments();
                             }
 
-                            _mailItem.Move(objFolder);
+                            mailItem.Move(objFolder);
                         }
                         else
                         {
                             if (HasNonEmbeddedAttachments() == true)
                             {
-                                ExtractAttachments(true);
+                                if (MessageBox.Show(GlobalConfig.localResourceManager.GetString("Message004"), "Save Attachments", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                                {
+                                    ExtractAttachments(false);
+                                }
+                                else
+                                {
+                                    ExtractAttachments(true);
+                                }
+
+                                RemoveAttachments();
                             }
 
-                            _mailItem.Move(objFolder);
+                            mailItem.Move(objFolder);
                         }
                     }
                 }
@@ -665,6 +656,8 @@ namespace eMailManager
                 FileMessage(item);
                 this.toolStripProgressBar1.Value++;
             }
+
+            this.toolStripProgressBar1.Visible = false;
         }
     }
 }

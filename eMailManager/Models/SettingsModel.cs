@@ -36,7 +36,7 @@ namespace eMailManager.Models
         public string LastLocation { get; set; } = string.Empty;
         public string ArchivedAndRetainedCategory { get; set; } = "eMail Manager Filed";
         public bool LeaveCopy { get; set; } = false;
-        public bool AlwaysEmbedAttachments { get; set; } = false;
+        public bool AlwaysEmbedAttachments { get; set; } = true;
         public bool AlwaysClearDeletedItems { get; set; } = false;
         public bool MonitorSentItems { get; set; } = true;
         public bool UseFileSystem { get; set; } = true;

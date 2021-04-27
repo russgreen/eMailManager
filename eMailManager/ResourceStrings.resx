@@ -184,12 +184,9 @@
     <value>File message (any attachments remain embedded)</value>
   </data>
   <data name="WorkFlow02" xml:space="preserve">
-    <value>File message and attachments separately (removes and saves the attachments in file system)</value>
-  </data>
-  <data name="WorkFlow03" xml:space="preserve">
     <value>File message and attachments separately (keep a copy of attachments in message)</value>
   </data>
-  <data name="WorkFlow03a" xml:space="preserve">
-    <value>File message and strip attachments from the message (removes the attachments)</value>
+  <data name="WorkFlow03" xml:space="preserve">
+    <value>File message and strip attachments from the message (removes and saves the attachments in file systes)</value>
   </data>
 </root>

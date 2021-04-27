@@ -1,8 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
 using Outlook = Microsoft.Office.Interop.Outlook;
 
-namespace eMailManager
+namespace eMailManager  
 {
     /// <summary>
     /// The EventTracker class handles the various Outlook events
@@ -79,36 +80,133 @@ namespace eMailManager
         #region Items Added
         private void InboxFolderItemAdded(object Item)
         {
-            throw new NotImplementedException();
+            
+
+            if (GlobalConfig.GlobalSettings.AutoArchiveIn == true)
+            {
+                //TODO: Auto save the message
+
+                try
+                {
+                    //mailitem added to inbox folder
+                    Outlook.MailItem olMailItem = (Outlook.MailItem)Item;
+                }
+                catch
+                {
+                    //do nothing if we can't convert item to a mail item
+                }
+            }
         }
 
         private void SentItemsFolderItemAdded(object Item)
         {
-            throw new NotImplementedException();
+            // mailitem added to sent items folder
+            Outlook.MailItem olMailItem = (Outlook.MailItem)Item;
+
+            List<Outlook.MailItem> olMailItems = new List<Outlook.MailItem>();
+
+            if (GlobalConfig.GlobalSettings.AutoArchiveOut == true)
+            {
+                //TODO: Auto save the message
+            }
+
+            // check if this is a duplicate mailitem or not.  
+            // handling a bug from google apps
+            if (GlobalConfig.OlLastItem is object)
+            {
+                if (GlobalConfig.OlLastItem.SenderName  == olMailItem.SenderName & 
+                    GlobalConfig.OlLastItem.To  == olMailItem.To & 
+                    GlobalConfig.OlLastItem.SentOn == olMailItem.SentOn & 
+                    GlobalConfig.OlLastItem.Subject == olMailItem.Subject & 
+                    GlobalConfig.OlLastItem.Attachments.Count == olMailItem.Attachments.Count & 
+                    GlobalConfig.OlLastItem.Body  == olMailItem.Body)
+                {
+                    // we seem to have a duplicate message so ingore it
+                    return;
+                }
+
+                // TODO: perform the same action as the last message
+                else
+                {
+                    // seems to be a unique message so carry on
+                }
+            }
+
+            // check if we should monitor sent items.
+            if (_monitorSentItems == false)
+            {
+                return;
+            }
+
+            //add the mail item to the list to pass to the form
+            olMailItems.Add(olMailItem);
+
+            var formMain = new FormMain(olMailItems, true);
+
+            // TODO: check if the form is already visible
+
+            // TODO: form is already visible so add sent item to stack
+
+            //if the user keeps cancelling them maybe they want to stop monitoring
+            if (formMain.ShowDialog() == DialogResult.Cancel)
+            {
+                // check for user wanting to stop monitoring folder
+                if (_sentItemsCancelCount + 1 >= 5)
+                {
+                    if (_monitorSentItems == true & _askedToMonitor == false)
+                    {
+                        if (MessageBox.Show(GlobalConfig.localResourceManager.GetString("CancelMonitoringMessage"),
+                            GlobalConfig.localResourceManager.GetString("CancelMonitoringCaption"),
+                           MessageBoxButtons.YesNo) == DialogResult.Yes)
+                        {
+                            _sentItemsCancelCount++;
+                            _monitorSentItems = false;
+                        }
+                        else
+                        {
+                            _monitorSentItems = true;
+                        }
+
+                        _askedToMonitor = true;
+                    }
+                }
+                else
+                {
+                    _sentItemsCancelCount++;
+                }
+            }
+            else
+            {
+                _sentItemsCancelCount = 0;
+            }
+
+
+            formMain.Dispose();
+            GlobalConfig.OlLastItem = olMailItem;
         }
         #endregion
 
         #region Items Changed
         private void InboxItemsItemChange(object Item)
         {
-            throw new NotImplementedException();
+           //nothing to be done
         }
 
         private void SentItemsItemChange(object Item)
         {
-            throw new NotImplementedException();
+            //nothing to be done
         }
         #endregion
 
         #region Items Removed
         private void InboxItemsItemRemove()
         {
-            throw new NotImplementedException();
+            //nothing to be done
         }
 
         private void SentItemsItemRemove()
         {
-            throw new NotImplementedException();
+            //nothing to be done
         }
         #endregion
     }
