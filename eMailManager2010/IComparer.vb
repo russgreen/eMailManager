@@ -1,4 +1,0 @@
-﻿
-Interface IComparer
-
-End Interface
