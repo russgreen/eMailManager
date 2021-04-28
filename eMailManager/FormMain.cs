@@ -210,7 +210,7 @@ namespace eMailManager
                     var newPath = new MessageStoreModel
                     {
                         Path = path,
-                        Description = path,
+                        Description = new DirectoryInfo(path).Name,
                         FolderID = path,
                         StoreID = path
                     };
@@ -228,7 +228,7 @@ namespace eMailManager
                 var newPath = new MessageStoreModel
                 {
                     Path = objFolder.FolderPath,
-                    Description = objFolder.FolderPath,
+                    Description = objFolder.Name,
                     FolderID = objFolder.EntryID,
                     StoreID = objFolder.StoreID
                 };
