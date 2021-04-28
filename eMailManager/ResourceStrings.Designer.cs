@@ -268,7 +268,7 @@ namespace eMailManager {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to File message and strip attachments from the message (removes and saves the attachments in file systes).
+        ///   Looks up a localized string similar to File message and strip attachments from the message (removes and saves the attachments in file system).
         /// </summary>
         internal static string WorkFlow03 {
             get {
