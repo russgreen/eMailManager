@@ -16,6 +16,7 @@ namespace eMailManager
         
         public static SettingsModel GlobalSettings;
 
+        public static Outlook.Application Application;
         public static Outlook.NameSpace MapiNamespace = Globals.ThisAddIn.Application.GetNamespace("MAPI");
         public static string DeletedItemsFolderName = "Deleted Items (eMail Manager)";
         public static Outlook.Folder DeletedItemsFolder;
@@ -50,6 +51,14 @@ namespace eMailManager
                     GlobalSettings.RememberLastLocation = bool.Parse(key.GetValue("RememberLastLocation", GlobalSettings.RememberLastLocation).ToString());
                     GlobalSettings.UseFileSystem = bool.Parse(key.GetValue("UseFileSystem", GlobalSettings.UseFileSystem).ToString());
                 }
+            }
+
+            if (CategoryExists(GlobalSettings.ArchivedAndRetainedCategory) == false)
+            {
+                Outlook.Categories categories = GlobalConfig.Application.Session.Categories;
+
+                categories.Add(GlobalSettings.ArchivedAndRetainedCategory,
+                    Outlook.OlCategoryColor.olCategoryColorDarkRed);
             }
         }
 
@@ -161,5 +170,23 @@ namespace eMailManager
 
         }
 
+
+        private static bool CategoryExists(string categoryName)
+        {
+            try
+            {
+                Outlook.Category category =
+                    GlobalConfig.Application.Session.Categories[categoryName];
+                if (category != null)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch { return false; }
+        }
     }
 }
