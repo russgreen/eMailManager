@@ -52,7 +52,8 @@ namespace eMailManager
 
         private void buttonSettings_Click(object sender, RibbonControlEventArgs e)
         {
-
+            var frm = new FormSettings();
+            frm.ShowDialog();
         }
 
 

@@ -21,11 +21,11 @@ namespace eMailManager
 
         private void ThisAddIn_Startup(object sender, System.EventArgs e)
         {
-            var application = this.Application;
-            var inspectors = application.Inspectors;
-            var activeInspector = application.ActiveInspector();
-            var explorers = application.Explorers;
-            var activeExplorer = application.ActiveExplorer();
+            GlobalConfig.Application = this.Application;
+            var inspectors = GlobalConfig.Application.Inspectors;
+            var activeInspector = GlobalConfig.Application.ActiveInspector();
+            var explorers = GlobalConfig.Application.Explorers;
+            var activeExplorer = GlobalConfig.Application.ActiveExplorer();
 
             while (activeExplorer is null)
             {

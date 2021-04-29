@@ -26,8 +26,6 @@ namespace eMailManager
 
         public static int MaxFile = 255;
 
-        //private static Outlook.Folder _saveFolder;
-
         public static void LoadSettings()
         {
             using (var key = Microsoft.Win32.Registry.CurrentUser.OpenSubKey(@"SOFTWARE\MailManager\Settings", false))
@@ -35,12 +33,7 @@ namespace eMailManager
                 if (key != null)
                 {
                     GlobalSettings.AlwaysClearDeletedItems = bool.Parse(key.GetValue("AlwaysClearDeletedItems", GlobalSettings.AlwaysClearDeletedItems).ToString()); 
-                    GlobalSettings.AlwaysEmbedAttachments = bool.Parse(key.GetValue("AlwaysEmbedAttachments", GlobalSettings.AlwaysEmbedAttachments).ToString());
                     GlobalSettings.ArchivedAndRetainedCategory = key.GetValue("ArchivedAndRetainedCategory", GlobalSettings.ArchivedAndRetainedCategory).ToString();
-                    //GlobalSettings.AutoArchiveIn;
-                    //GlobalSettings.AutoArchiveInPath;
-                    //GlobalSettings.AutoArchiveOut;
-                    //GlobalSettings.AutoArchiveOutPath;
                     GlobalSettings.FilenameFilter = key.GetValue("FilenameFilter", GlobalSettings.FilenameFilter).ToString();
                     GlobalSettings.FormHeight = int.Parse(key.GetValue("FormHeight", GlobalSettings.FormHeight).ToString());
                     GlobalSettings.FormWidth = int.Parse(key.GetValue("FormWidth", GlobalSettings.FormWidth).ToString());
@@ -72,7 +65,6 @@ namespace eMailManager
             }
 
             key.SetValue("AlwaysClearDeletedItems", GlobalSettings.AlwaysClearDeletedItems); 
-            key.SetValue("AlwaysEmbedAttachments", GlobalSettings.AlwaysEmbedAttachments);
             key.SetValue("ArchivedAndRetainedCategory", GlobalSettings.ArchivedAndRetainedCategory);
             key.SetValue("FilenameFilter", GlobalSettings.FilenameFilter);
             key.SetValue("FormHeight", GlobalSettings.FormHeight);

@@ -87,7 +87,7 @@ namespace eMailManager.Controls
             {
                 _isValid = false;
                 TextBox1.BackColor = System.Drawing.Color.Red;
-                // Me.TextBox1.Text = m_DefaultFileNameFilter
+                TextBox1.Text = _defaultFileNameFilter;
                 IsValidChanged?.Invoke();
             }
             else
