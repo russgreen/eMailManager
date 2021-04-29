@@ -81,21 +81,6 @@ namespace eMailManager
         private void InboxFolderItemAdded(object Item)
         {
             
-
-            if (GlobalConfig.GlobalSettings.AutoArchiveIn == true)
-            {
-                //TODO: Auto save the message
-
-                try
-                {
-                    //mailitem added to inbox folder
-                    Outlook.MailItem olMailItem = (Outlook.MailItem)Item;
-                }
-                catch
-                {
-                    //do nothing if we can't convert item to a mail item
-                }
-            }
         }
 
         private void SentItemsFolderItemAdded(object Item)
@@ -104,11 +89,6 @@ namespace eMailManager
             Outlook.MailItem olMailItem = (Outlook.MailItem)Item;
 
             List<Outlook.MailItem> olMailItems = new List<Outlook.MailItem>();
-
-            if (GlobalConfig.GlobalSettings.AutoArchiveOut == true)
-            {
-                //TODO: Auto save the message
-            }
 
             // check if this is a duplicate mailitem or not.  
             // handling a bug from google apps

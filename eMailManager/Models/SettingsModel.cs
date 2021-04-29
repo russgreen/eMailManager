@@ -40,10 +40,6 @@ namespace eMailManager.Models
         public bool AlwaysClearDeletedItems { get; set; } = false;
         public bool MonitorSentItems { get; set; } = true;
         public bool UseFileSystem { get; set; } = true;
-        public bool AutoArchiveIn { get; set; } = false;
-        public bool AutoArchiveOut { get; set; } = false;
-        public string AutoArchiveInPath { get; set; } = System.Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-        public string AutoArchiveOutPath { get; set; } = System.Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
         public int FormWidth { get; set; } = 705;
         public int FormHeight { get; set; } = 520;
 
