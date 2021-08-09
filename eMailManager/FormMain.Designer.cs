@@ -352,7 +352,7 @@ namespace eMailManager
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripProgressBar1});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 459);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 482);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Padding = new System.Windows.Forms.Padding(0);
             this.statusStrip1.Size = new System.Drawing.Size(689, 22);
@@ -371,7 +371,7 @@ namespace eMailManager
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = global::eMailManager.Properties.Settings.Default.FormBackColor;
-            this.ClientSize = new System.Drawing.Size(689, 481);
+            this.ClientSize = new System.Drawing.Size(689, 504);
             this.ControlBox = false;
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.checkboxLeaveCopy);
@@ -388,6 +388,7 @@ namespace eMailManager
             this.Margin = new System.Windows.Forms.Padding(0, 3, 0, 3);
             this.MinimumSize = new System.Drawing.Size(705, 520);
             this.Name = "FormMain";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "eMail Manager";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormMain_FormClosing);
             this.Load += new System.EventHandler(this.FormMain_Load);
