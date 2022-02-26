@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.1.31903.286
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{00914F05-3659-40DC-A8BC-CB1A71EFA73A}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eMailManager", "eMailManager\eMailManager.csproj", "{F74399E2-37D5-4F22-894C-FB5F4086E570}"
 EndProject
@@ -34,11 +37,11 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {A9DD4421-3EFD-4CAE-9C8E-D21C04E42029}
-		BuildVersion_IncrementBeforeBuild = True
-		BuildVersion_BuildAction = Build
-		BuildVersion_UpdateAssemblyVersion = False
-		BuildVersion_UseGlobalSettings = False
 		BuildVersion_ConfigurationName = Release
+		BuildVersion_UseGlobalSettings = False
+		BuildVersion_UpdateAssemblyVersion = False
+		BuildVersion_BuildAction = Build
+		BuildVersion_IncrementBeforeBuild = True
+		SolutionGuid = {A9DD4421-3EFD-4CAE-9C8E-D21C04E42029}
 	EndGlobalSection
 EndGlobal
