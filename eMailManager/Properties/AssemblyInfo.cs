@@ -11,7 +11,7 @@ using System.Security;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Russell Green")]
 [assembly: AssemblyProduct("eMail Manager")]
-[assembly: AssemblyCopyright("Copyright © Russell Green 2012 - 2021")]
+[assembly: AssemblyCopyright("Copyright © Russell Green")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
